@@ -1,0 +1,7 @@
+﻿################################################################################
+# Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
+################################################################################
+
+/SST_LB02/bin/Debug
+/CurrencyExchangeWrapper/obj/Debug
+/SST_LB02/obj/Debug
