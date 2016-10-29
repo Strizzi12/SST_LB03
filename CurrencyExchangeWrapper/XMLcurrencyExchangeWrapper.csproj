@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9EFE362B-6986-4EEE-9E07-FECBBA87DF3C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{720F3921-9539-4149-BE77-2861CA5A4707}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SST_LB02</RootNamespace>
-    <AssemblyName>SST_LB02</AssemblyName>
+    <RootNamespace>CurrencyExchangeWrapper</RootNamespace>
+    <AssemblyName>XMLcurrencyExchangeWrapper</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,7 +37,6 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -50,7 +46,6 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -63,47 +58,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainApplication.cs" />
+    <Compile Include="XMLcurrencyExchangeWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="CurrencyExchange.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CurrencyExchangeWrapper\XMLcurrencyExchangeWrapper.csproj">
-      <Project>{720f3921-9539-4149-be77-2861ca5a4707}</Project>
-      <Name>XMLcurrencyExchangeWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CustomerWrapper\CustomerWrapper.csproj">
-      <Project>{18ba1c71-28e0-4993-be1d-f2adee0a74cd}</Project>
-      <Name>CustomerWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LoggingWrapper\XMLloggingWrapper.csproj">
-      <Project>{5d894f0e-e775-4e75-b34f-274f4ddf0b5e}</Project>
-      <Name>XMLloggingWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyAccountWrapper\AccountWrapper.csproj">
-      <Project>{cb01b5d9-fd56-4d6d-82f3-c05ea76cc52c}</Project>
-      <Name>AccountWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLaccountWrapper\XMLaccountWrapper.csproj">
-      <Project>{5e9ab726-8f4a-43f0-b682-613f7262a458}</Project>
-      <Name>XMLaccountWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLcontrolerWrapper\XMLcustomerWrapper.csproj">
-      <Project>{c04546ea-4f2a-4f4a-98b2-4c4b3f56972d}</Project>
-      <Name>XMLcustomerWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
