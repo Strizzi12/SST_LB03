@@ -18,9 +18,5 @@ namespace FS
         {
             return Marshal.StringToHGlobalAnsi(tmp);
         }
-
-
-
-
     }
 }

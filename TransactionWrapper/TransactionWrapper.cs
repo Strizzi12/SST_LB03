@@ -36,12 +36,12 @@ namespace FS
 		/// <param name="tmpValue"></param>
 		/// <param name="currency"></param>
 		/// <returns>Returns true if the transfer is successfully.</returns>
-		public static bool Intf_transfer(int custId, int tmpFromAccID, int tmpToAccID, float tmpValue, int currency)
+		public static int Intf_transfer(int custId, int tmpFromAccID, int tmpToAccID, float tmpValue, int currency)
 		{
 			if (currency == 0)
-				return (createTransaction(custId, tmpFromAccID, tmpToAccID, Helper.StoIPtr("transfer"), tmpValue) == 0 ? true : false);
+				return createTransaction(custId, tmpFromAccID, tmpToAccID, Helper.StoIPtr("transfer"), tmpValue);
 			else
-				return (createTransaction(custId, tmpFromAccID, tmpToAccID, Helper.StoIPtr("transfer"), (float)(CurrencyExchangeWrapper.Intf_exchange(tmpValue, currency, 0))) == 0 ? true : false);
+				return createTransaction(custId, tmpFromAccID, tmpToAccID, Helper.StoIPtr("transfer"), Convert.ToSingle(CurrencyExchangeWrapper.Intf_exchange(tmpValue, currency, 0)));
 		}
 
 		/// <summary>
@@ -52,9 +52,9 @@ namespace FS
 		/// <param name="tmpAccID"></param>
 		/// <param name="tmpValue"></param>
 		/// <returns>Returns true if the withdraw is successfully.</returns>
-		public static bool Intf_withdraw(int tmpAccID, float tmpValue)
+		public static int Intf_withdraw(int tmpAccID, float tmpValue)
 		{
-			return (withdraw(tmpAccID, tmpValue) == 0 ? true : false);
+			return withdraw(tmpAccID, tmpValue);
 		}
 
 		/// <summary>
@@ -65,9 +65,9 @@ namespace FS
 		/// <param name="tmpAccID"></param>
 		/// <param name="tmpValue"></param>
 		/// <returns>Returns true if the withdraw is successfully.</returns>
-		public static bool Intf_deposit(int tmpAccID, float tmpValue)
+		public static int Intf_deposit(int tmpAccID, float tmpValue)
 		{
-			return (deposit(tmpAccID, tmpValue) == 0 ? true : false);
+			return deposit(tmpAccID, tmpValue);
 		}
 
 		#endregion

@@ -82,6 +82,10 @@
       <Project>{aed32fd3-b906-419d-884f-6c1e8b350d5d}</Project>
       <Name>DataMaintenance</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FScurrencyExchangeWrapper\CurrencyExchangeWrapper.csproj">
+      <Project>{b2e144e0-2382-44eb-a234-a7574ae80c36}</Project>
+      <Name>CurrencyExchangeWrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LoggingWrapper\XMLloggingWrapper.csproj">
       <Project>{5d894f0e-e775-4e75-b34f-274f4ddf0b5e}</Project>
       <Name>XMLloggingWrapper</Name>
@@ -89,6 +93,10 @@
     <ProjectReference Include="..\MyAccountWrapper\AccountWrapper.csproj">
       <Project>{cb01b5d9-fd56-4d6d-82f3-c05ea76cc52c}</Project>
       <Name>AccountWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TransactionWrapper\TransactionWrapper.csproj">
+      <Project>{aa1cc4be-40e4-4afe-9fab-8fb25fe7daec}</Project>
+      <Name>TransactionWrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\XMLaccountWrapper\XMLaccountWrapper.csproj">
       <Project>{5e9ab726-8f4a-43f0-b682-613f7262a458}</Project>
@@ -101,6 +109,10 @@
     <ProjectReference Include="..\XMLDataMaintenance\XMLDataMaintenance.csproj">
       <Project>{ffb6a115-080c-47a1-b9b1-10c955147df2}</Project>
       <Name>XMLDataMaintenance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLtransactionWrapper\XMLtransactionWrapper.csproj">
+      <Project>{c732e7f3-7d22-474f-8e08-99607dfa013b}</Project>
+      <Name>XMLtransactionWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
