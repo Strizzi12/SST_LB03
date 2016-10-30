@@ -12,3 +12,7 @@
 /SST_LB02/bin/x86/Debug
 /SST_LB02/obj/x86/Debug
 /XMLcontrolerWrapper/obj/Debug
+/CustomerWrapper/bin/Debug
+/FScurrencyExchangeWrapper/obj/Debug
+/XMLtransactionWrapper/obj/Debug
+/TransactionWrapper/obj/Debug
