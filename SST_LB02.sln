@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SST_LB02", "SST_LB02\SST_LB02.csproj", "{9EFE362B-6986-4EEE-9E07-FECBBA87DF3C}"
 EndProject
@@ -20,6 +20,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMaintenance", "DataMaintenance\DataMaintenance.csproj", "{AED32FD3-B906-419D-884F-6C1E8B350D5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLDataMaintenance", "XMLDataMaintenance\XMLDataMaintenance.csproj", "{FFB6A115-080C-47A1-B9B1-10C955147DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLtransactionWrapper", "XMLtransactionWrapper\XMLtransactionWrapper.csproj", "{C732E7F3-7D22-474F-8E08-99607DFA013B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionWrapper", "TransactionWrapper\TransactionWrapper.csproj", "{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeWrapper", "FScurrencyExchangeWrapper\CurrencyExchangeWrapper.csproj", "{B2E144E0-2382-44EB-A234-A7574AE80C36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +107,30 @@ Global
 		{FFB6A115-080C-47A1-B9B1-10C955147DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFB6A115-080C-47A1-B9B1-10C955147DF2}.Release|x86.ActiveCfg = Release|Any CPU
 		{FFB6A115-080C-47A1-B9B1-10C955147DF2}.Release|x86.Build.0 = Release|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Debug|x86.Build.0 = Debug|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Release|x86.ActiveCfg = Release|Any CPU
+		{C732E7F3-7D22-474F-8E08-99607DFA013B}.Release|x86.Build.0 = Release|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Debug|x86.Build.0 = Debug|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA1CC4BE-40E4-4AFE-9FAB-8FB25FE7DAEC}.Release|x86.Build.0 = Release|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Debug|x86.Build.0 = Debug|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Release|x86.ActiveCfg = Release|Any CPU
+		{B2E144E0-2382-44EB-A234-A7574AE80C36}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

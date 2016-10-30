@@ -64,6 +64,8 @@ namespace SST_LB02
             VEaccID2 = VE.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
             FSaccID2 = FS.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 
+
+
             VE.AccountWrapper.Intf_createBankStatement(VEaccID2);
             FS.AccountWrapper.Intf_createBankStatement(FSaccID2);
 
