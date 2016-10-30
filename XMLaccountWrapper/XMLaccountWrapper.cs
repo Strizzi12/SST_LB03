@@ -18,6 +18,9 @@ namespace VE
 
         [DllImport("XMLControler.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int xmlcontroler_closeAccount(int tmpAccID);
+
+        [DllImport("XMLControler.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        private static extern bool xmlcontroler_getBankStatement(int tmpAccID);
         #endregion
 
         #region ### INTERFACES ###
@@ -55,6 +58,31 @@ namespace VE
         {
             return xmlcontroler_closeAccount(tmpAccID);
         }
+
+        /// <summary>
+        /// Creates a bankstatement of the given account in the directory of the exe
+        /// </summary>
+        /// <param name="tmpAccID"></param>
+        /// <returns>>Returns 0 if the creation of the bankstatement was successfull or an error code if the creation failed</returns>
+        public static int Intf_createBankStatement(int tmpAccID)
+        {
+            bool boolRetrun = xmlcontroler_getBankStatement(tmpAccID);
+
+            //converts the bool return value to int for compatibility to 2nd party dll
+            int intReturn = 0;
+            if (boolRetrun)
+            {
+                return intReturn;
+            }
+            else
+            {
+                intReturn = -1;
+                return intReturn;
+            }
+        }
+
+
+
         #endregion
     }
 }

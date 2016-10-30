@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SST_LB02
@@ -11,8 +12,11 @@ namespace SST_LB02
     {
         static void Main(string[] args)
         {
-            int VEcusID, FScusID = 0;
+            //clear existing data of directory
+            VE.DataMaintenance.Intf_clearData();
+            FS.DataMaintenance.Intf_clearData();
 
+            int VEcusID, FScusID = 0;
             // Customer functions
             VEcusID = VE.CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "Breitenfelderstrasse", "5020 Salzburg", 47, "13.11.1992");
             FScusID = FS.CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "Breitenfelderstrasse", "5020 Salzburg", 47, "13.11.1992");
@@ -28,21 +32,40 @@ namespace SST_LB02
             //--------------------------------------------------------------------------
             // Account functions
             int VEaccID, FSaccID = 0;
-            VEaccID = VE.AccountWrapper.Intf_createAccount(1, 1000, "TestNameAcc");
-            FSaccID = FS.AccountWrapper.Intf_createAccount(1, 1000, "TestNameAcc");
+            VEaccID = VE.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+            FSaccID = FS.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 
-            VE.AccountWrapper.Intf_editAccount(VEaccID, 0);
+            //Account edit
+            VE.AccountWrapper.Intf_editAccount(VEaccID, 1);
             try
             {
                 //interface throws notimplex bc 2nd party dll does not include this functionality
-                FS.AccountWrapper.Intf_editAccount(FSaccID, 0);
+                FS.AccountWrapper.Intf_editAccount(FSaccID, 1);
             }
             catch (Exception ex)
             {
                 Debug.Print(ex.Message);
             }
 
+            ////Account deletion
             VE.AccountWrapper.Intf_deleteAccount(VEaccID);
+            try
+            {
+                //interface throws notimplex bc 2nd party dll does not include this functionality
+                FS.AccountWrapper.Intf_deleteAccount(FSaccID);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+            }
+
+            ////create bankstatement for account
+            int VEaccID2, FSaccID2 = 0;
+            VEaccID2 = VE.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+            FSaccID2 = FS.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+
+            VE.AccountWrapper.Intf_createBankStatement(VEaccID2);
+            FS.AccountWrapper.Intf_createBankStatement(FSaccID2);
 
 
 

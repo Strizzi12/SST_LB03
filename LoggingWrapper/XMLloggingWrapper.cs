@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace VE
 {
+    /// <summary>
+    /// Logging can be used without any other components therefor the exported functions of the
+    /// dll got wrapped, 2nd party dll does not support this functionality
+    /// </summary>
     public class LoggingWrapper
     {
-
+        
         #region ### WRAPP ###
         [DllImport("Logging.dll")]
         private static extern void logging_printVersion();
@@ -19,15 +23,24 @@ namespace VE
         #endregion
 
         #region ### INTERFACES ###
-        //public static void Intf_printVersion()
-        //{
-        //    logging_printVersion();
-        //}
+        /// <summary>
+        /// Testfunctionality 
+        /// Prints the filename, compiletime of dll and the version of the dll
+        /// </summary>
+        public static void Intf_printVersion()
+        {
+            logging_printVersion();
+        }
 
-        //public static void Intf_logError(string tmpErrorText, string tmpFileName)
-        //{
-        //    logging_logError(Marshal.StringToHGlobalAnsi(tmpErrorText), Marshal.StringToHGlobalAnsi(tmpFileName));
-        //}
+        /// <summary>
+        /// Logs the given errotext and filename into a textfile called LogFile.txt which is created in the directory of the exe
+        /// </summary>
+        /// <param name="tmpErrorText"></param>
+        /// <param name="tmpFileName"></param>
+        public static void Intf_logError(string tmpErrorText, string tmpFileName)
+        {
+            logging_logError(Marshal.StringToHGlobalAnsi(tmpErrorText), Marshal.StringToHGlobalAnsi(tmpFileName));
+        }
         #endregion
     }
 }

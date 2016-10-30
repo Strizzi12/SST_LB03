@@ -17,6 +17,8 @@ namespace FS
 
         //no import of delete account possible because its not implemented in 2nd party dll
 
+        [DllImport("BankDealings.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        private static extern int saveKontoauszug(IntPtr path, int kontoNr);
         #endregion
 
         #region ### INTERFACES ###
@@ -53,6 +55,19 @@ namespace FS
             throw new NotImplementedException();
         }
 
-            #endregion
+        /// <summary>
+        /// Creates a bankstatement of the given account in the directory of the exe
+        /// </summary>
+        /// <param name="tmpAccID"></param>
+        /// <returns>Returns 0 if the creation of the bankstatement was successfull or an error code if the creation failed</returns>
+        public static int Intf_createBankStatement(int tmpAccID)
+        {
+            //"" to use current dirctory of exe
+            return saveKontoauszug(Helper.StoIPtr(""), tmpAccID);
         }
+
+
+
+        #endregion
+    }
 }
