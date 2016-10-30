@@ -44,7 +44,9 @@ namespace VE
 
         /// <summary>
         /// Updates customer with the given parameters
-        /// Nota that the parameter gebDate will not be used in this interface
+        /// Note that the parameter gebDate will not be used in this interface
+        /// Loss of functionality for compatibility reasons: passing string params as "" or int values as 0 to only insert values to update
+        /// Functionality cannot be implemented in C# interface of 2nd dll because required dll-function returns memory address which gets freed
         /// </summary>
         /// <param name="cusID"></param>
         /// <param name="firstName"></param>

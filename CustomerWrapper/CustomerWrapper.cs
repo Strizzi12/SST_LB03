@@ -23,6 +23,8 @@ namespace FS
         [DllImport("Customer.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int deactivateCustomer(int cid);
 
+        [DllImport("Customer.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        private static extern int getCustomer(int cid, IntPtr destDddress, int length);
         #endregion
 
         #region ### INTERFACES ###

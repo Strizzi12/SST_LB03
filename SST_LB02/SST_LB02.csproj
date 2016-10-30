@@ -78,6 +78,10 @@
       <Project>{18ba1c71-28e0-4993-be1d-f2adee0a74cd}</Project>
       <Name>CustomerWrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataMaintenance\DataMaintenance.csproj">
+      <Project>{aed32fd3-b906-419d-884f-6c1e8b350d5d}</Project>
+      <Name>DataMaintenance</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LoggingWrapper\XMLloggingWrapper.csproj">
       <Project>{5d894f0e-e775-4e75-b34f-274f4ddf0b5e}</Project>
       <Name>XMLloggingWrapper</Name>
@@ -93,6 +97,10 @@
     <ProjectReference Include="..\XMLcontrolerWrapper\XMLcustomerWrapper.csproj">
       <Project>{c04546ea-4f2a-4f4a-98b2-4c4b3f56972d}</Project>
       <Name>XMLcustomerWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLDataMaintenance\XMLDataMaintenance.csproj">
+      <Project>{ffb6a115-080c-47a1-b9b1-10c955147df2}</Project>
+      <Name>XMLDataMaintenance</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
