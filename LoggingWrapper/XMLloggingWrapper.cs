@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VE
+namespace Pres
 {
     /// <summary>
     /// Logging can be used without any other components therefor the exported functions of the

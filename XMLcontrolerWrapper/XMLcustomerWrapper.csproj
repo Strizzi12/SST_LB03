@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XMLcontrolerWrapper</RootNamespace>
-    <AssemblyName>XMLcontrolerWrapper</AssemblyName>
+    <AssemblyName>CustomerWrapper</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,6 +53,12 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)SST_LB02\bin\Debug"
+xcopy /Y "$(TargetDir)Logging.dll" "$(SolutionDir)SST_LB02\bin\Debug"
+xcopy /Y "$(TargetDir)XMLControler.dll" "$(SolutionDir)SST_LB02\bin\Debug"
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

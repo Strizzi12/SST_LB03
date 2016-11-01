@@ -45,12 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FScurrencyExchangeWrapper\CurrencyExchangeWrapper.csproj">
-      <Project>{b2e144e0-2382-44eb-a234-a7574ae80c36}</Project>
-      <Name>CurrencyExchangeWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Account.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -58,7 +52,21 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FScurrencyExchangeWrapper\CurrencyExchangeWrapper.csproj">
+      <Project>{b2e144e0-2382-44eb-a234-a7574ae80c36}</Project>
+      <Name>CurrencyExchangeWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)SST_LB02\bin\Debug"
+xcopy /Y "$(TargetDir)Account.dll" "$(SolutionDir)SST_LB02\bin\Debug"
+xcopy /Y "$(TargetDir)BankDealings.dll" "$(SolutionDir)SST_LB02\bin\Debug"
+xcopy /Y "$(TargetDir)CurrencyCalculator.dll" "$(SolutionDir)SST_LB02\bin\Debug"
+xcopy /Y "$(TargetDir)CurrencyExchangeWrapper.dll" "$(SolutionDir)SST_LB02\bin\Debug"
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

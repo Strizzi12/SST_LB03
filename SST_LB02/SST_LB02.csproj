@@ -53,6 +53,22 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AccountWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AccountWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="CurrencyExchangeWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CurrencyExchangeWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomerWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CustomerWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DataMaintenanceWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DataMaintenanceWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +77,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TransactionWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\TransactionWrapper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainApplication.cs" />
@@ -69,53 +89,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CurrencyExchangeWrapper\XMLcurrencyExchangeWrapper.csproj">
-      <Project>{720f3921-9539-4149-be77-2861ca5a4707}</Project>
-      <Name>XMLcurrencyExchangeWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CustomerWrapper\CustomerWrapper.csproj">
-      <Project>{18ba1c71-28e0-4993-be1d-f2adee0a74cd}</Project>
-      <Name>CustomerWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataMaintenance\DataMaintenance.csproj">
-      <Project>{aed32fd3-b906-419d-884f-6c1e8b350d5d}</Project>
-      <Name>DataMaintenance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FScurrencyExchangeWrapper\CurrencyExchangeWrapper.csproj">
-      <Project>{b2e144e0-2382-44eb-a234-a7574ae80c36}</Project>
-      <Name>CurrencyExchangeWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LoggingWrapper\XMLloggingWrapper.csproj">
-      <Project>{5d894f0e-e775-4e75-b34f-274f4ddf0b5e}</Project>
-      <Name>XMLloggingWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyAccountWrapper\AccountWrapper.csproj">
-      <Project>{cb01b5d9-fd56-4d6d-82f3-c05ea76cc52c}</Project>
-      <Name>AccountWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TransactionWrapper\TransactionWrapper.csproj">
-      <Project>{aa1cc4be-40e4-4afe-9fab-8fb25fe7daec}</Project>
-      <Name>TransactionWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLaccountWrapper\XMLaccountWrapper.csproj">
-      <Project>{5e9ab726-8f4a-43f0-b682-613f7262a458}</Project>
-      <Name>XMLaccountWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLcontrolerWrapper\XMLcustomerWrapper.csproj">
-      <Project>{c04546ea-4f2a-4f4a-98b2-4c4b3f56972d}</Project>
-      <Name>XMLcustomerWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLDataMaintenance\XMLDataMaintenance.csproj">
-      <Project>{ffb6a115-080c-47a1-b9b1-10c955147df2}</Project>
-      <Name>XMLDataMaintenance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLtransactionWrapper\XMLtransactionWrapper.csproj">
-      <Project>{c732e7f3-7d22-474f-8e08-99607dfa013b}</Project>
-      <Name>XMLtransactionWrapper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
