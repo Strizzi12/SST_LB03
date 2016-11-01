@@ -35,11 +35,11 @@ namespace Pres
         /// <param name="nr"></param>
         /// <param name="birthDate"></param>
         /// <returns>Returns the ID of the customer object or an error code</returns>
-        public static int Intf_createCustomer(string firstName, string lastName, string street, string postCodePlace, int nr, string birthDate)
-        {
+        public static int Intf_createCustomer(string firstName, string lastName, string place, string plz, string street, int nr, string birthDate)
+		{
             //parameter birthDate not used for this function because its not needed/cannot be stored but required for other dlls compatibility
 
-            return xmlcontroler_createCustomer(Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(postCodePlace), Helper.StoIPtr(street), nr);
+            return xmlcontroler_createCustomer(Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(plz + " " + place), Helper.StoIPtr(street), nr);
         }
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace Pres
         /// <param name="hausNr"></param>
         /// <param name="gebDate"></param>
         /// <returns>Returns the value 0 if update was successfull  or -1 if an error occured</returns>
-        public static int Intf_updateCustomer(int cusID, string firstName, string lastName, string plzOrt, string street, int hausNr, string gebDate)
+        public static int Intf_updateCustomer(int cusID, string firstName, string lastName, string place, string plz, string street, int hausNr, string gebDate)
         {
             //parameter gebDate not used for this function because its not needed/cannot be stored but required for other dlls compatibility
 
-            int returnVal = xmlcontroler_updateCustomer(cusID, Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(plzOrt), Helper.StoIPtr(street), hausNr);
+            int returnVal = xmlcontroler_updateCustomer(cusID, Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(plz + " " + place), Helper.StoIPtr(street), hausNr);
 
             //required to have same return behaviour for different dlls
             if (returnVal < 0)

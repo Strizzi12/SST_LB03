@@ -39,9 +39,9 @@ namespace Pres
         /// <param name="nr"></param>
         /// <param name="birthDate"></param>
         /// <returns>Returns the ID of the created customer or an error code</returns>
-        public static int Intf_createCustomer(string firstName, string lastName, string street, string postCodePlace, int nr, string birthDate)
+        public static int Intf_createCustomer(string firstName, string lastName, string place, string plz, string street, int hausNr, string birthDate)
         {
-            return createCustomer(Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(street + " " + nr.ToString()), Helper.StoIPtr(postCodePlace), Helper.StoIPtr(birthDate));
+            return createCustomer(Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(street + " " + hausNr.ToString()), Helper.StoIPtr(plz), Helper.StoIPtr(birthDate));
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace Pres
         /// <param name="hausNr"></param>
         /// <param name="gebDate"></param>
         /// <returns>Returns the value 0 if update was successfull  or -1 if an error occured</returns>
-        public static unsafe int Intf_updateCustomer(int cusID, string firstName, string lastName, string plzOrt, string street, int hausNr, string gebDate)
+        public static unsafe int Intf_updateCustomer(int cusID, string firstName, string lastName, string place, string plz, string street, int hausNr, string gebDate)
         {
-            return updateCustomer(cusID, Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(street + " " + hausNr), Helper.StoIPtr(plzOrt), Helper.StoIPtr(gebDate));
+            return updateCustomer(cusID, Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(street + " " + hausNr.ToString()), Helper.StoIPtr(plz), Helper.StoIPtr(gebDate));
         }
 
         /// <summary>

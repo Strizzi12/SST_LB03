@@ -48,7 +48,7 @@ namespace Pres
         /// <returns></returns>
         public static int Intf_editAccount(int tmpAccID, int tmpType)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Method not implemented.\n");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Pres
         /// <returns></returns>
         public static int Intf_deleteAccount(int tmpAccID)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Method not implemented.\n");
         }
 
         /// <summary>
