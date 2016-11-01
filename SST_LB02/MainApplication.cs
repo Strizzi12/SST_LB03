@@ -15,7 +15,7 @@ namespace SST_LB02
             //clear existing data of directory
             VE.DataMaintenance.Intf_clearData();
             FS.DataMaintenance.Intf_clearData();
-
+            //--------------------------------------------------------------------------
             int VEcusID, FScusID = 0;
             // Customer functions
             VEcusID = VE.CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "Breitenfelderstrasse", "5020 Salzburg", 47, "13.11.1992");
