@@ -19,17 +19,23 @@ namespace FS
 
         [DllImport("BankDealings.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int saveKontoauszug(IntPtr path, int kontoNr);
-        #endregion
 
-        #region ### INTERFACES ###
-        /// <summary>
-        /// Interface creates an account with the given parameters
-        /// </summary>
-        /// <param name="typ"></param>
-        /// <param name="money"></param>
-        /// <param name="name"></param>
-        /// <returns>Returns the ID of the created account or an error code</returns>
-        public static int Intf_createAccount(int typ, double money, string name)
+		[DllImport("BankDealings.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		private static extern bool assignAccounttoCustomer(int tmpAccID, int tmpCusID);
+
+		[DllImport("BankDealings.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		private static extern bool revokeAccountfromCustomer(int tmpAccID, int tmpCusID);
+		#endregion
+
+		#region ### INTERFACES ###
+		/// <summary>
+		/// Interface creates an account with the given parameters
+		/// </summary>
+		/// <param name="typ"></param>
+		/// <param name="money"></param>
+		/// <param name="name"></param>
+		/// <returns>Returns the ID of the created account or an error code</returns>
+		public static int Intf_createAccount(int typ, double money, string name)
         {
             return createAccount(typ, money, Helper.StoIPtr(name));
         }
@@ -66,8 +72,28 @@ namespace FS
             return saveKontoauszug(Helper.StoIPtr(""), tmpAccID);
         }
 
+		/// <summary>
+		/// Attaches a customer to an account
+		/// </summary>
+		/// <param name="tmpAccID"></param>
+		/// <param name="tmpCusID"></param>
+		/// <returns>>Returns 0 if the creation of the bankstatement was successfull or an error code if the creation failed</returns>
+		public static int Intf_attachAccount(int tmpAccID, int tmpCusID)
+		{
+			return (assignAccounttoCustomer(tmpAccID, tmpCusID) ? 0 : -1);
+		}
 
+		/// <summary>
+		/// Dettaches a customer from an account
+		/// </summary>
+		/// <param name="tmpAccID"></param>
+		/// <param name="tmpCusID"></param>
+		/// <returns>>Returns 0 if the creation of the bankstatement was successfull or an error code if the creation failed</returns>
+		public static int Intf_dettachAccount(int tmpAccID, int tmpCusID)
+		{
+			return (revokeAccountfromCustomer(tmpAccID, tmpCusID) ? 0 : -1);
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -60,16 +60,32 @@ namespace SST_LB02
             }
 
             ////create bankstatement for account
-            int VEaccID2, FSaccID2 = 0;
+            int VEaccID2, FSaccID2, VEaccID3, FSaccID3 = 0;
             VEaccID2 = VE.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
             FSaccID2 = FS.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			VEaccID3 = VE.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			FSaccID3 = FS.AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+
+			//Attach customer to account
+			FS.AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
+
+			//Creating transactions
+			VE.TransactionWrapper.Intf_transfer(VEcusID, VEaccID2, VEaccID3, 100, 0);
+			FS.TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
+
+			VE.TransactionWrapper.Intf_deposit(VEaccID2, 500);
+			FS.TransactionWrapper.Intf_deposit(FSaccID2, 500);
+
+			VE.TransactionWrapper.Intf_withdraw(VEaccID2, 500);
+			FS.TransactionWrapper.Intf_withdraw(FSaccID2, 500);
 
             VE.AccountWrapper.Intf_createBankStatement(VEaccID2);
             FS.AccountWrapper.Intf_createBankStatement(FSaccID2);
 
+			FS.TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
+			FS.TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
 
-
-
+			FS.AccountWrapper.Intf_createBankStatement(FSaccID2);
         }
     }
 }
