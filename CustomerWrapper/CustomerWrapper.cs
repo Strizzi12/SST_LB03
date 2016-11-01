@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -23,8 +24,8 @@ namespace FS
         [DllImport("Customer.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int deactivateCustomer(int cid);
 
-        [DllImport("Customer.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern int getCustomer(int cid, IntPtr destDddress, int length);
+        [DllImport("Customer.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Auto)]
+        private static unsafe extern int getCustomer(int cid, IntPtr destDddress, int length);
         #endregion
 
         #region ### INTERFACES ###
@@ -54,7 +55,7 @@ namespace FS
         /// <param name="hausNr"></param>
         /// <param name="gebDate"></param>
         /// <returns>Returns the value 0 if update was successfull  or -1 if an error occured</returns>
-        public static int Intf_updateCustomer(int cusID, string firstName, string lastName, string plzOrt, string street, int hausNr, string gebDate)
+        public static unsafe int Intf_updateCustomer(int cusID, string firstName, string lastName, string plzOrt, string street, int hausNr, string gebDate)
         {
             return updateCustomer(cusID, Helper.StoIPtr(firstName), Helper.StoIPtr(lastName), Helper.StoIPtr(street + " " + hausNr), Helper.StoIPtr(plzOrt), Helper.StoIPtr(gebDate));
         }

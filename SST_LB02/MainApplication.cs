@@ -47,7 +47,7 @@ namespace SST_LB02
                 Debug.Print(ex.Message);
             }
 
-            ////Account deletion
+            //Account deletion
             VE.AccountWrapper.Intf_deleteAccount(VEaccID);
             try
             {
