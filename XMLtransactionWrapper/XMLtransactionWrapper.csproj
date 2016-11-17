@@ -35,10 +35,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client">
-      <HintPath>..\..\..\..\..\..\..\..\Desktop\RabbitMQ sample\sst.bank.rabbit\sst.bank.rabbit\sst.bank.rabbit\Resources\RabbitMQ.Client.dll</HintPath>
+      <HintPath>RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.ServiceModel">
-      <HintPath>..\..\..\..\..\..\..\..\Desktop\RabbitMQ sample\sst.bank.rabbit\sst.bank.rabbit\sst.bank.rabbit\Resources\RabbitMQ.ServiceModel.dll</HintPath>
+      <HintPath>RabbitMQ.ServiceModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logging.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RabbitMQ.Client.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RabbitMQ.ServiceModel.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="XMLControler.dll">
