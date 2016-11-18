@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Pres;
 
-namespace SST_LB02
+namespace SST_LB03
 {
     class MainApplication
     {
@@ -91,6 +91,7 @@ namespace SST_LB02
 			bool running = true;
 			Console.WriteLine("Willkommen zum einfachen BankClient.\nIm Folgenden werden die eingebauten Kommandos  und mit welcher Zahl sie aufgerufen werden können erklärt.");
 			hilfe();
+			TransactionFuncts.Receive();	//Needs to be called atleast once, so that the consumer can listen to incoming Transactions
 			while (running)
 			{
 				Console.WriteLine("Bitte Zahl eingeben: ");
@@ -109,9 +110,10 @@ namespace SST_LB02
 			Console.WriteLine("Konto löschen: 6");
 			Console.WriteLine("Kontoauszug erstellen: 7");
 			Console.WriteLine("Neue Überweisung: 8");
-			Console.WriteLine("Einzahlen: 9");
-			Console.WriteLine("Abheben: 10");
-			Console.WriteLine("Wartungsaufgaben (bedeutet, löschen aller Daten, für Simulationszwecke): 11");
+			Console.WriteLine("Neue Remote - Überweisung: 9");
+			Console.WriteLine("Einzahlen: 10");
+			Console.WriteLine("Abheben: 11");
+			Console.WriteLine("Wartungsaufgaben (bedeutet, löschen aller Daten, für Simulationszwecke): 12");
 			Console.WriteLine("Hilfe anzeigen: 0");
 			Console.WriteLine("Exit: exit\n");
 		}
@@ -286,7 +288,34 @@ namespace SST_LB02
 					}
 					return true;
 
-				case "9":	//Einzahlen
+				case "9":   //Neue Remote - Ueberweisung
+					try
+					{
+						//Die Überweisung braucht auch einen zum Konto zugewiesenen Kunden.
+						Console.WriteLine("Um eine neue Ueberweisung durchzuführen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
+						Console.WriteLine("Von Kontonummer, von BIC, zu Kontonummer, zu BIC, Betrag, in Waehrung(EUR = 0, USD = 1, GBP = 2)\nEingabe: ");
+						a = Console.ReadLine();
+
+						string fromIban = a.Split(',', ' ')[0];
+						string fromBic = a.Split(',', ' ')[2];
+						string toIban = a.Split(',', ' ')[4];
+						string toBic = a.Split(',', ' ')[6];
+						double value = double.Parse(a.Split(',', ' ')[8]);
+						ECurrency currency = ECurrency.Euro;
+						if (a.Split(',', ' ')[10].Equals("1"))
+							currency = ECurrency.Dollar;
+						else if(a.Split(',', ' ')[10].Equals("2"))
+							currency = ECurrency.Pound;
+						RemoteTransaction transaction = new RemoteTransaction(fromIban, fromBic, toIban, toBic, value, currency);
+						TransactionFuncts.Send(transaction);
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine("Error: " + e.Message);
+					}
+					return true;
+
+				case "10":	//Einzahlen
 					try
 					{
 						Console.WriteLine("Um etwas auf einem Konto einzuzahlen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
@@ -304,7 +333,7 @@ namespace SST_LB02
 					}
 					return true;
 
-				case "10":   //Abheben
+				case "11":   //Abheben
 					try
 					{
 						Console.WriteLine("Um etwas von einem Konto abzuheben, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
@@ -322,7 +351,7 @@ namespace SST_LB02
 					}
 					return true;
 
-				case "11":   //Wartungsaufgaben
+				case "12":   //Wartungsaufgaben
 					try
 					{
 						Console.WriteLine("Räumt nun alle Daten auf. Alles wird gelöscht. Bitte mit \"ja\" bestätigen.");

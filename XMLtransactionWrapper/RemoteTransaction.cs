@@ -1,123 +1,132 @@
-﻿using Newtonsoft.Json;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
 
 namespace Pres
 {
-    class TransactionFuncts
+    public class RemoteTransaction
     {
+        public Guid TransactionId { get; set; }
+        public RemoteCustomer Sender { get; set; }
+        public RemoteCustomer Receiver { get; set; }
+        public Int32 Timestamp { get; set; }        // Unix format timestamp
+        public int Errorcode { get; set; }         // 0 = no Error
+        public string Purpose { get; set; }
+        public double Amount { get; set; }          // if positive: transaction, negative: debiting
+        public ECurrency Currency { get; set; }
+        public bool IsResponding { get; set; }      // if Transaction is a Response
+
         /// <summary>
-        /// Sends a remote transaction
+        /// 
         /// </summary>
-        /// <param name="transaction"></param>
-        static void Send(RemoteTransaction transaction)
+        /// <param name="senderAccID"></param>
+        /// <param name="senderBic"></param>
+        /// <param name="receiverAccID"></param>
+        /// <param name="receiverBic"></param>
+        /// <param name="amount"></param>
+        /// <param name="currency"></param>
+        /// <param name="purpose"></param>
+        /// <param name="isResponding"></param>
+        /// <param name="errorcode"></param>
+        public RemoteTransaction(string senderAccID, string senderBic, string receiverAccID, string receiverBic, double amount, ECurrency currency, string purpose = "", bool isResponding = false, int errorcode = 0)
         {
-            var factory = new ConnectionFactory();
-            factory.Uri = "amqp://user10:User10ITS2016!@rabbit.binna.eu/";  //Insert your own user and password
-
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                var transactionString = JsonConvert.SerializeObject(transaction);   //Awesome function
-
-                var properties = channel.CreateBasicProperties();
-                properties.Persistent = true;
-
-                channel.BasicPublish(exchange: "bank.development",  //Choose between bank.development and bank.production depending of the queue (e.g. 70 is production, 71 is development)
-                                    routingKey: transaction.Receiver.Bic,   //This relates to the queue name of the receiver bank
-                                    basicProperties: properties,    //Set the properties to persistent, otherwise the messages will get lost if the server restarts
-                                    body: GetBytes(transactionString));
-
-                Console.WriteLine("[x] Message Sent");
-            }
-
-            Console.WriteLine(" Press [enter] to exit send.");
-            Console.ReadLine();
+            this.TransactionId = Guid.NewGuid();
+            Sender = new RemoteCustomer(GenerateIbanFromAccID(senderAccID), senderBic);
+            this.Amount = amount;
+            Receiver = new RemoteCustomer(GenerateIbanFromAccID(receiverAccID), receiverBic);
+            Timestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            this.Currency = currency;
+            this.IsResponding = isResponding;
+            this.Errorcode = errorcode;
+            this.Purpose = purpose;
         }
 
         /// <summary>
-        /// Receives a remote transaction
+        /// 
         /// </summary>
-        static void Receive()
+        /// <returns></returns>
+        public string GetStatus()
         {
-            var factory = new ConnectionFactory();
-            factory.Uri = "amqp://user10:User10ITS2016!@rabbit.binna.eu/";
-
-            using (var connection = factory.CreateConnection())
+            switch (this.Errorcode)
             {
-                using (var channel = connection.CreateModel())
-                {
-                    channel.QueueDeclare(queue: "11",
-                                 durable: true, //Always use durable: true, because the queue on the server is configured this way. Otherwise you'll not be able to connect
-                                 exclusive: false,
-                                 autoDelete: false,
-                                 arguments: null);
-
-                    var consumer = new EventingBasicConsumer(channel);
-
-                    consumer.Received += (model, ea) =>
-                    {
-                        var body = GetString(ea.Body);
-                        var transaction = JsonConvert.DeserializeObject<RemoteTransaction>(body);
-
-                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false); //Important. When the message get's not acknowledged, it gets sent again
-
-                        Console.WriteLine("[x] Received:");
-                        PrintTransaction(transaction);
-                    };
-
-                    channel.BasicConsume(queue: "11",
-                                         noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
-                                         consumer: consumer);
-
-                    Console.WriteLine(" Press [enter] to exit receive.");
-                    Console.ReadLine();
-                }
+                case 0:
+                    return "Success";
+                case -1:
+                    return "Debiting not authorized";       // to debit = abbuchen :)
+                case -2:
+                    return "IBAN not found";
+                case -3:
+                    return "Internal DLL error";
+                case -4:
+                    return "Backflip";
+                case -5:
+                    return "Json-Format invalid / Data could not be converted";
+                case -6:
+                    return "Transaction rejected";
+                case -7:
+                    return "no Money on Account";
+                default:
+                    return "Error not spezified";
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="transaction"></param>
-        static void PrintTransaction(RemoteTransaction transaction)
-        {
-            Console.WriteLine("Receiver Iban: " + transaction.Receiver.Iban);
-            Console.WriteLine("Receiver Bic : " + transaction.Receiver.Bic);
-            Console.WriteLine("Sender Iban  : " + transaction.Sender.Iban);
-            Console.WriteLine("Sender Bic   : " + transaction.Sender.Bic);
-            Console.WriteLine("Amount       : " + transaction.Amount);
-            Console.WriteLine("Currency     : " + transaction.Currency.ToString());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="str"></param>
+        /// <param name="kontonummer"></param>
         /// <returns></returns>
-        private static byte[] GetBytes(string str)
+        public static string GenerateIbanFromAccID(string kontonummer)
         {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
+            long pz = 0L;
+            long dr = 0L;
+            int kontoNrLength = kontonummer.Length;
+            const int kontoNrTotalLength = 10;
+            int fillUpCnt = kontoNrTotalLength - kontoNrLength;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
-        private static string GetString(byte[] bytes)
-        {
-            char[] chars = new char[bytes.Length / sizeof(char)];
-            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
-            return new string(chars);
-        }
+            try
+            {
+                long tmp = Convert.ToInt64(kontonummer);
+                dr = (1 + (tmp - 1) % 9);
+                pz = 7 - dr % 7;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+                return string.Empty;
+            }
+            string returnVal = string.Empty;
 
+            //build msg string
+            returnVal += pz.ToString();
+            for (int i = 0; i < fillUpCnt; i++)
+            {
+                returnVal += "0";
+            }
+            returnVal += kontonummer;
+
+            return returnVal;
+        }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class RemoteCustomer
+    {
+        public string Iban { get; set; }
+        public string Bic { get; set; }
+
+        public RemoteCustomer(string iban, string bic)
+        {
+            this.Iban = iban;
+            this.Bic = bic;
+        }
+    }
+
+    /*
+     * umrechnung:
+     * EURO 1
+     * DOLLAR 1,1070
+     * POUND 0,8889
+    */
+    public enum ECurrency { Euro, Dollar, Pound }
 }

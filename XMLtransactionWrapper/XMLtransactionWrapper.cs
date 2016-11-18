@@ -70,6 +70,24 @@ namespace Pres
 		{
 			return xmlcontroler_depositMoney(tmpAccID, tmpValue) ? 0 : -1;
 		}
+
+		internal static void Intf_remoteTransfer(string fromAccIban, string fromAccBic, string toAccIban, string toAccBic, double value, ECurrency currency)
+		{
+			int fromAccId = Int32.Parse(fromAccIban);
+			int fromAccIdBic = Int32.Parse(fromAccBic);
+			int toAccId = Int32.Parse(toAccIban);
+			int toAccIdBic = Int32.Parse(toAccBic);
+			float ourValue = float.Parse(value.ToString());
+			int ourCurrency = 0;
+			if (currency.Equals(ECurrency.Dollar))
+				ourCurrency = 1;
+			else if (currency.Equals(ECurrency.Pound))
+				ourCurrency = 2;
+
+
+			//Aufruf der DLL-Funktion
+			throw new NotImplementedException();
+		}
 		#endregion
 	}
 }

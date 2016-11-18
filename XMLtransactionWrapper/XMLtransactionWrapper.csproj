@@ -50,8 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TransactionFunctions.cs" />
     <Compile Include="RemoteTransaction.cs" />
-    <Compile Include="Transaction.cs" />
     <Compile Include="XMLtransactionWrapper.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
