@@ -102,14 +102,16 @@ namespace Pres
                     channel.BasicConsume(queue: "10",
                                      noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
                                      consumer: consumer);
+                    Thread.Sleep(1000);
                     //Console.WriteLine(" Press [enter] to exit receive.");
-
-                    Thread.Sleep(300);
                     //Console.ReadLine();
+                    channel.Dispose();
                 }
+                connection.Dispose();
             }
-
-
+            factory = null;
+            Thread thread = new Thread(TransactionFunctions.Receive);
+            thread.Start();
         }
 
         /// <summary>
