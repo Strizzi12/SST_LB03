@@ -97,10 +97,13 @@ namespace SST_LB03
 
             while (running)
 			{
-                TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
+                Thread thread = new Thread(TransactionFunctions.Receive);
+                thread.Start();
+                //TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
                 Console.WriteLine("Bitte Zahl eingeben: ");
                 running = eingabeAusfuehren(Console.ReadLine());
-			}
+
+            }
         }
 
 		static void hilfe()

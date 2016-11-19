@@ -67,6 +67,7 @@ namespace Pres
         /// </summary>
         public static void Receive()
         {
+
             var factory = new ConnectionFactory();
             factory.Uri = "amqp://user10:User10ITS2016!@rabbit.binna.eu/";
 
@@ -89,25 +90,25 @@ namespace Pres
                         try
                         {
                             channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false); //Important. When the message get's not acknowledged, it gets sent again
-                        }
+                            }
                         catch (Exception)
                         {
                         }
-                        
+
                         Console.WriteLine("[x] Received:");
                         PrintTransaction(transaction);
                     };
 
                     channel.BasicConsume(queue: "10",
-                                         noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
-                                         consumer: consumer);
-
+                                     noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
+                                     consumer: consumer);
                     //Console.WriteLine(" Press [enter] to exit receive.");
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(300);
                     //Console.ReadLine();
                 }
             }
+
 
         }
 
