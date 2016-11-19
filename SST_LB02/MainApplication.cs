@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Pres;
+using System.ComponentModel;
 
 namespace SST_LB03
 {
@@ -92,11 +93,13 @@ namespace SST_LB03
             bool running = true;
 			Console.WriteLine("Willkommen zum einfachen BankClient.\nIm Folgenden werden die eingebauten Kommandos  und mit welcher Zahl sie aufgerufen werden können erklärt.");
 			hilfe();
-            TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
+
+
             while (running)
 			{
-				Console.WriteLine("Bitte Zahl eingeben: ");
-				running = eingabeAusfuehren(Console.ReadLine());
+                TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
+                Console.WriteLine("Bitte Zahl eingeben: ");
+                running = eingabeAusfuehren(Console.ReadLine());
 			}
         }
 

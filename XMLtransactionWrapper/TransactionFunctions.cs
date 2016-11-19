@@ -3,9 +3,11 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pres
@@ -84,18 +86,29 @@ namespace Pres
                     {
                         var body = GetString(ea.Body);
                         var transaction = JsonConvert.DeserializeObject<RemoteTransaction>(body);
-
-                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false); //Important. When the message get's not acknowledged, it gets sent again
-
+                        try
+                        {
+                            channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false); //Important. When the message get's not acknowledged, it gets sent again
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        
+                        Console.WriteLine("[x] Received:");
                         PrintTransaction(transaction);
                     };
 
                     channel.BasicConsume(queue: "10",
                                          noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
                                          consumer: consumer);
+
+                    //Console.WriteLine(" Press [enter] to exit receive.");
+
+                    Thread.Sleep(100);
+                    //Console.ReadLine();
                 }
             }
-            Console.WriteLine("Started listening to queue number 10!");
+
         }
 
         /// <summary>
