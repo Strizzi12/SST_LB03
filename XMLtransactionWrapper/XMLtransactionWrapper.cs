@@ -20,7 +20,7 @@ namespace Pres
 		private static extern bool xmlcontroler_withdrawMoney(int tmpAccID, float tmpValue);
 
 		[DllImport("XMLControler.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		private static extern bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, float tmpValue, IntPtr tmpPurpose);
+		private static extern bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, int tmpFromBIC, int tmpToBic, float tmpValue, IntPtr tmpPurpose);
 
 		#endregion
 
@@ -86,7 +86,7 @@ namespace Pres
 				float ourValue = float.Parse(value.ToString());
 				
 				string purpose = "Sende BIC: " + fromAccBic + ", Empfang BIC: " + toAccBic;
-				xmlcontroler_remoteTransaction(fromAccId, toAccId, ourValue, Helper.StoIPtr(purpose));
+				xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
 			}
 			catch (Exception e)
 			{

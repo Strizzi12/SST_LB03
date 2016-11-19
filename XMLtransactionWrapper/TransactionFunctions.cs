@@ -48,7 +48,6 @@ namespace Pres
                     Debug.Print("Wrong Receiver Format");
                 }
 
-
                 channel.BasicPublish(exchange: "bank." + pOrD,  //Choose between bank.development and bank.production depending of the queue (e.g. 70 is production, 71 is development)
                                     routingKey: transaction.Receiver.Bic,   //This relates to the queue name of the receiver bank
                                     basicProperties: properties,    //Set the properties to persistent, otherwise the messages will get lost if the server restarts
@@ -88,18 +87,15 @@ namespace Pres
 
                         channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false); //Important. When the message get's not acknowledged, it gets sent again
 
-                        Console.WriteLine("[x] Received:");
                         PrintTransaction(transaction);
                     };
 
                     channel.BasicConsume(queue: "10",
                                          noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
                                          consumer: consumer);
-
-                    Console.WriteLine(" Press [enter] to exit receive.");
-                    Console.ReadLine();
                 }
             }
+            Console.WriteLine("Started listening to queue number 10!");
         }
 
         /// <summary>

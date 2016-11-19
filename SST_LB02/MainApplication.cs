@@ -85,8 +85,6 @@ namespace SST_LB03
 			//#endregion
 
 			DataMaintenance.Intf_clearData();
-			Console.WriteLine("\nThread schläft für 5 Sekunden, bitte warten!");
-			Thread.Sleep(5000);
 			Console.Clear();
             AccountWrapper.Intf_createAccount(0, 1000.00, "FirstAccount");
             AccountWrapper.Intf_createAccount(0, 1000.00, "SecondAccount");
