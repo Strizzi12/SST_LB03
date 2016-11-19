@@ -18,6 +18,10 @@ namespace Pres
 
 		[DllImport("XMLControler.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		private static extern bool xmlcontroler_withdrawMoney(int tmpAccID, float tmpValue);
+
+		[DllImport("XMLControler.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		private static extern bool xmlcontroler_remoteTransaction(int tmpFromAccID, int tmpToAccID, float tmpValue, IntPtr tmpPurpose);
+
 		#endregion
 
 		#region ### INTERFACES ###
@@ -73,20 +77,48 @@ namespace Pres
 
 		internal static void Intf_remoteTransfer(string fromAccIban, string fromAccBic, string toAccIban, string toAccBic, double value, ECurrency currency)
 		{
-			int fromAccId = Int32.Parse(fromAccIban);
-			int fromAccIdBic = Int32.Parse(fromAccBic);
-			int toAccId = Int32.Parse(toAccIban);
-			int toAccIdBic = Int32.Parse(toAccBic);
-			float ourValue = float.Parse(value.ToString());
-			int ourCurrency = 0;
-			if (currency.Equals(ECurrency.Dollar))
-				ourCurrency = 1;
-			else if (currency.Equals(ECurrency.Pound))
-				ourCurrency = 2;
+			try
+			{
+				int fromAccId = Int32.Parse(getAccIdFromIban(fromAccIban));
+				int fromAccIdBic = Int32.Parse(fromAccBic);
+				int toAccId = Int32.Parse(getAccIdFromIban(toAccIban));
+				int toAccIdBic = Int32.Parse(toAccBic);
+				float ourValue = float.Parse(value.ToString());
+				/*
+				int ourCurrency = 0;
+				if (currency.Equals(ECurrency.Dollar))
+					ourCurrency = 1;
+				else if (currency.Equals(ECurrency.Pound))
+					ourCurrency = 2;
+				*/
+				string purpose = "Sende BIC: " + fromAccBic + ", Empfang BIC: " + toAccBic;
+				xmlcontroler_remoteTransaction(fromAccId, toAccId, ourValue, Helper.StoIPtr(purpose));
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Error: " + e.Message);
+			}
+			
+		}
+		#endregion
 
+		#region ### HELPER FUNCTIONS ###
 
-			//Aufruf der DLL-Funktion
-			throw new NotImplementedException();
+		/// <summary>
+		/// Generates the accId from the IBAN. This also checks if the checksum is good.
+		/// </summary>
+		/// <param name="iban"></param>
+		/// <returns></returns>
+		private static string getAccIdFromIban(string iban)
+		{
+			string accId = string.Empty;
+			if (RemoteTransaction.CheckPruefziffer(iban))
+				return accId;
+
+			string pruefziffer = iban[0].ToString();
+			string rest = iban.Substring(1, iban.Length);
+			accId = rest.TrimStart('0');
+			return accId;
 		}
 		#endregion
 	}

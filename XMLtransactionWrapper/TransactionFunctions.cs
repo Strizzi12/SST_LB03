@@ -33,11 +33,14 @@ namespace Pres
                                     basicProperties: properties,    //Set the properties to persistent, otherwise the messages will get lost if the server restarts
                                     body: GetBytes(transactionString));
 
-                Console.WriteLine("[x] Message Sent");
+				//Interface Aufruf der Remote Transaction.
+				TransactionWrapper.Intf_remoteTransfer(transaction.Sender.Iban, transaction.Sender.Bic, transaction.Receiver.Iban, transaction.Receiver.Bic, transaction.Amount, transaction.Currency);
+
+				Console.WriteLine("[x] Message Sent");
             }
 
-            Console.WriteLine(" Press [enter] to exit send.");
-            Console.ReadLine();
+            //Console.WriteLine(" Press [enter] to exit send.");
+            //Console.ReadLine();
         }
 
 		/// <summary>
@@ -78,8 +81,8 @@ namespace Pres
                                          noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
                                          consumer: consumer);
 
-                    Console.WriteLine(" Press [enter] to exit receive.");
-                    Console.ReadLine();
+                    //Console.WriteLine(" Press [enter] to exit receive.");
+                    //Console.ReadLine();
                 }
             }
         }

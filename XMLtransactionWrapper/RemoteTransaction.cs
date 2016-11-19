@@ -105,7 +105,32 @@ namespace Pres
 
             return returnVal;
         }
-    }
+
+		public static bool CheckPruefziffer(string iban)
+		{
+			long pz = 0L;
+			long dr = 0L;
+			string pruefzifferFromIban = iban[0].ToString();
+			string rest = iban.Substring(1, iban.Length);
+			try
+			{
+				long tmp = Convert.ToInt64(rest);
+				dr = (1 + (tmp - 1) % 9);
+				pz = 7 - dr % 7;
+			}
+			catch (Exception ex)
+			{
+				Debug.Print(ex.Message);
+				return false;
+			}
+			string pruefzahlToCheack = pz.ToString();
+			if (pruefzahlToCheack.Equals(pruefzifferFromIban))
+				return true;
+			else
+				return false;
+		}
+
+	}
 
     /// <summary>
     /// 
