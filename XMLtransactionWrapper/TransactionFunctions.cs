@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,11 @@ namespace Pres
 {
     public class TransactionFunctions
     {
-		/// <summary>
-		/// Sends a remote transaction
-		/// </summary>
-		/// <param name="transaction"></param>
-		public static void Send(RemoteTransaction transaction)
+        /// <summary>
+        /// Sends a remote transaction
+        /// </summary>
+        /// <param name="transaction"></param>
+        public static void Send(RemoteTransaction transaction)
         {
             var factory = new ConnectionFactory();
             factory.Uri = "amqp://user10:User10ITS2016!@rabbit.binna.eu/";  //Insert your own user and password
@@ -28,22 +29,42 @@ namespace Pres
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
 
-                channel.BasicPublish(exchange: "bank.production",  //Choose between bank.development and bank.production depending of the queue (e.g. 70 is production, 71 is development)
+                string pOrD = string.Empty;
+
+                try
+                {
+                    var BicAsNumber = Convert.ToUInt32(transaction.Receiver.Bic);
+                    if (BicAsNumber % 2 == 0)
+                    {
+                        pOrD = "production";
+                    }
+                    else
+                    {
+                        pOrD = "development";
+                    }
+                }
+                catch (Exception)
+                {
+                    Debug.Print("Wrong Receiver Format");
+                }
+
+
+                channel.BasicPublish(exchange: "bank." + pOrD,  //Choose between bank.development and bank.production depending of the queue (e.g. 70 is production, 71 is development)
                                     routingKey: transaction.Receiver.Bic,   //This relates to the queue name of the receiver bank
                                     basicProperties: properties,    //Set the properties to persistent, otherwise the messages will get lost if the server restarts
                                     body: GetBytes(transactionString));
 
-				//Interface Aufruf der Remote Transaction.
-				TransactionWrapper.Intf_remoteTransfer(transaction.Sender.Iban, transaction.Sender.Bic, transaction.Receiver.Iban, transaction.Receiver.Bic, transaction.Amount, transaction.Currency);
+                //Interface Aufruf der Remote Transaction.
+                TransactionWrapper.Intf_remoteTransfer(transaction.Sender.Iban, transaction.Sender.Bic, transaction.Receiver.Iban, transaction.Receiver.Bic, transaction.Amount, transaction.Currency);
 
-				Console.WriteLine("[x] Message Sent");
+                Console.WriteLine("[x] Message Sent");
             }
         }
 
-		/// <summary>
-		/// Receives a remote transaction
-		/// </summary>
-		public static void Receive()
+        /// <summary>
+        /// Receives a remote transaction
+        /// </summary>
+        public static void Receive()
         {
             var factory = new ConnectionFactory();
             factory.Uri = "amqp://user10:User10ITS2016!@rabbit.binna.eu/";

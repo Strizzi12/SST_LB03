@@ -94,7 +94,8 @@ namespace SST_LB03
             bool running = true;
 			Console.WriteLine("Willkommen zum einfachen BankClient.\nIm Folgenden werden die eingebauten Kommandos  und mit welcher Zahl sie aufgerufen werden können erklärt.");
 			hilfe();
-			while (running)
+            TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
+            while (running)
 			{
 				Console.WriteLine("Bitte Zahl eingeben: ");
 				running = eingabeAusfuehren(Console.ReadLine());
@@ -310,7 +311,6 @@ namespace SST_LB03
 							currency = ECurrency.Pound;
 						RemoteTransaction transaction = new RemoteTransaction(RemoteTransaction.GenerateIbanFromAccID(fromIban), fromBic, RemoteTransaction.GenerateIbanFromAccID(toIban), toBic, value, currency);
 						TransactionFunctions.Send(transaction);
-                        TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
                     }
 					catch (Exception e)
 					{
