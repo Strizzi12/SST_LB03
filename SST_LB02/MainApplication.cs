@@ -14,84 +14,86 @@ namespace SST_LB03
 		
 		static void Main(string[] args)
         {
-			#region FUNCTION TEST CALL
-			//clear existing data of directory
-			DataMaintenance.Intf_clearData();
-            //--------------------------------------------------------------------------
-            int VEcusID, FScusID = 0;
-            // Customer functions
-            VEcusID = CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
+			//#region FUNCTION TEST CALL
+			////clear existing data of directory
+			//DataMaintenance.Intf_clearData();
+   //         //--------------------------------------------------------------------------
+   //         int VEcusID, FScusID = 0;
+   //         // Customer functions
+   //         VEcusID = CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
 
-            CustomerWrapper.Intf_updateCustomer(VEcusID, "Mike", "Anders", "5020", "AnotherPlace", "AnotherStreet", 1111, "11.11.1111");
+   //         CustomerWrapper.Intf_updateCustomer(VEcusID, "Mike", "Anders", "5020", "AnotherPlace", "AnotherStreet", 1111, "11.11.1111");
 
-            CustomerWrapper.Intf_deleteCustomer(VEcusID);
+   //         CustomerWrapper.Intf_deleteCustomer(VEcusID);
 
-            VEcusID = CustomerWrapper.Intf_createCustomer("Betty", "Katzian", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
-			//--------------------------------------------------------------------------
-			// Account functions
-			int VEaccID, FSaccID = 0;
-            VEaccID = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+   //         VEcusID = CustomerWrapper.Intf_createCustomer("Betty", "Katzian", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
+			////--------------------------------------------------------------------------
+			//// Account functions
+			//int VEaccID, FSaccID = 0;
+   //         VEaccID = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 
-            //Account edit
-            try
-            {
-                //interface throws notimplex bc 2nd party dll does not include this functionality
-                AccountWrapper.Intf_editAccount(FSaccID, 1);
-            }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
+   //         //Account edit
+   //         try
+   //         {
+   //             //interface throws notimplex bc 2nd party dll does not include this functionality
+   //             AccountWrapper.Intf_editAccount(FSaccID, 1);
+   //         }
+   //         catch (Exception ex)
+   //         {
+   //             Debug.Print(ex.Message);
+   //         }
 
-            //Account deletion
-            try
-            {
-                //interface throws notimplex bc 2nd party dll does not include this functionality
-                AccountWrapper.Intf_deleteAccount(FSaccID);
-            }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
+   //         //Account deletion
+   //         try
+   //         {
+   //             //interface throws notimplex bc 2nd party dll does not include this functionality
+   //             AccountWrapper.Intf_deleteAccount(FSaccID);
+   //         }
+   //         catch (Exception ex)
+   //         {
+   //             Debug.Print(ex.Message);
+   //         }
 
-            ////create transactions for the accounts
-            int VEaccID2, FSaccID2, VEaccID3, FSaccID3 = 0;
-            VEaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
-            FSaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
-			VEaccID3 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
-			FSaccID3 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+   //         ////create transactions for the accounts
+   //         int VEaccID2, FSaccID2, VEaccID3, FSaccID3 = 0;
+   //         VEaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+   //         FSaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			//VEaccID3 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			//FSaccID3 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 
-			//Attach/Dettach customer to account
-			AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
+			////Attach/Dettach customer to account
+			//AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
 
-            AccountWrapper.Intf_dettachAccount(FSaccID2, FScusID);
+   //         AccountWrapper.Intf_dettachAccount(FSaccID2, FScusID);
 
-            AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
+   //         AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
 
-            //Creating transactions
-            TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
+   //         //Creating transactions
+   //         TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
 
-			TransactionWrapper.Intf_deposit(FSaccID2, 500);
+			//TransactionWrapper.Intf_deposit(FSaccID2, 500);
 
-			TransactionWrapper.Intf_withdraw(FSaccID2, 500);
+			//TransactionWrapper.Intf_withdraw(FSaccID2, 500);
 
-            //create a bankstatement
-            AccountWrapper.Intf_createBankStatement(FSaccID2);
+   //         //create a bankstatement
+   //         AccountWrapper.Intf_createBankStatement(FSaccID2);
 
-			TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
+			//TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
 
-            //create a bankstatement
-            AccountWrapper.Intf_createBankStatement(FSaccID2);
-			#endregion
+   //         //create a bankstatement
+   //         AccountWrapper.Intf_createBankStatement(FSaccID2);
+			//#endregion
 
 			DataMaintenance.Intf_clearData();
 			Console.WriteLine("\nThread schläft für 5 Sekunden, bitte warten!");
 			Thread.Sleep(5000);
 			Console.Clear();
-			bool running = true;
+            AccountWrapper.Intf_createAccount(0, 1000.00, "FirstAccount");
+            AccountWrapper.Intf_createAccount(0, 1000.00, "SecondAccount");
+            AccountWrapper.Intf_createAccount(0, 1000.00, "ThirdAccount");
+            bool running = true;
 			Console.WriteLine("Willkommen zum einfachen BankClient.\nIm Folgenden werden die eingebauten Kommandos  und mit welcher Zahl sie aufgerufen werden können erklärt.");
 			hilfe();
-			TransactionFunctions.Receive();	//Needs to be called atleast once, so that the consumer can listen to incoming Transactions
 			while (running)
 			{
 				Console.WriteLine("Bitte Zahl eingeben: ");
@@ -306,9 +308,10 @@ namespace SST_LB03
 							currency = ECurrency.Dollar;
 						else if(a.Split(',', ' ')[10].Equals("2"))
 							currency = ECurrency.Pound;
-						RemoteTransaction transaction = new RemoteTransaction(fromIban, fromBic, toIban, toBic, value, currency);
+						RemoteTransaction transaction = new RemoteTransaction(RemoteTransaction.GenerateIbanFromAccID(fromIban), fromBic, RemoteTransaction.GenerateIbanFromAccID(toIban), toBic, value, currency);
 						TransactionFunctions.Send(transaction);
-					}
+                        TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
+                    }
 					catch (Exception e)
 					{
 						Console.WriteLine("Error: " + e.Message);

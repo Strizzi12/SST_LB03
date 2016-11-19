@@ -30,9 +30,9 @@ namespace Pres
         public RemoteTransaction(string senderAccID, string senderBic, string receiverAccID, string receiverBic, double amount, ECurrency currency, string purpose = "", bool isResponding = false, int errorcode = 0)
         {
             this.TransactionId = Guid.NewGuid();
-            Sender = new RemoteCustomer(GenerateIbanFromAccID(senderAccID), senderBic);
+            Sender = new RemoteCustomer(senderAccID, senderBic);
             this.Amount = amount;
-            Receiver = new RemoteCustomer(GenerateIbanFromAccID(receiverAccID), receiverBic);
+            Receiver = new RemoteCustomer(receiverAccID, receiverBic);
             Timestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             this.Currency = currency;
             this.IsResponding = isResponding;
@@ -79,6 +79,11 @@ namespace Pres
             long pz = 0L;
             long dr = 0L;
             int kontoNrLength = kontonummer.Length;
+            if (kontoNrLength == 11)
+            {
+                return kontonummer;
+            }
+
             const int kontoNrTotalLength = 10;
             int fillUpCnt = kontoNrTotalLength - kontoNrLength;
 
@@ -111,7 +116,7 @@ namespace Pres
 			long pz = 0L;
 			long dr = 0L;
 			string pruefzifferFromIban = iban[0].ToString();
-			string rest = iban.Substring(1, iban.Length);
+			string rest = iban.Substring(1, iban.Length-1);
 			try
 			{
 				long tmp = Convert.ToInt64(rest);
@@ -129,7 +134,6 @@ namespace Pres
 			else
 				return false;
 		}
-
 	}
 
     /// <summary>

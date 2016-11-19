@@ -84,13 +84,7 @@ namespace Pres
 				int toAccId = Int32.Parse(getAccIdFromIban(toAccIban));
 				int toAccIdBic = Int32.Parse(toAccBic);
 				float ourValue = float.Parse(value.ToString());
-				/*
-				int ourCurrency = 0;
-				if (currency.Equals(ECurrency.Dollar))
-					ourCurrency = 1;
-				else if (currency.Equals(ECurrency.Pound))
-					ourCurrency = 2;
-				*/
+				
 				string purpose = "Sende BIC: " + fromAccBic + ", Empfang BIC: " + toAccBic;
 				xmlcontroler_remoteTransaction(fromAccId, toAccId, ourValue, Helper.StoIPtr(purpose));
 			}
@@ -112,11 +106,11 @@ namespace Pres
 		private static string getAccIdFromIban(string iban)
 		{
 			string accId = string.Empty;
-			if (RemoteTransaction.CheckPruefziffer(iban))
+			if (!RemoteTransaction.CheckPruefziffer(iban))
 				return accId;
 
 			string pruefziffer = iban[0].ToString();
-			string rest = iban.Substring(1, iban.Length);
+			string rest = iban.Substring(1, iban.Length-1);
 			accId = rest.TrimStart('0');
 			return accId;
 		}

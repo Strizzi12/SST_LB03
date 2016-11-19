@@ -28,7 +28,7 @@ namespace Pres
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
 
-                channel.BasicPublish(exchange: "bank.development",  //Choose between bank.development and bank.production depending of the queue (e.g. 70 is production, 71 is development)
+                channel.BasicPublish(exchange: "bank.production",  //Choose between bank.development and bank.production depending of the queue (e.g. 70 is production, 71 is development)
                                     routingKey: transaction.Receiver.Bic,   //This relates to the queue name of the receiver bank
                                     basicProperties: properties,    //Set the properties to persistent, otherwise the messages will get lost if the server restarts
                                     body: GetBytes(transactionString));
@@ -38,9 +38,6 @@ namespace Pres
 
 				Console.WriteLine("[x] Message Sent");
             }
-
-            //Console.WriteLine(" Press [enter] to exit send.");
-            //Console.ReadLine();
         }
 
 		/// <summary>
@@ -55,7 +52,7 @@ namespace Pres
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(queue: "11",
+                    channel.QueueDeclare(queue: "10",
                                  durable: true, //Always use durable: true, because the queue on the server is configured this way. Otherwise you'll not be able to connect
                                  exclusive: false,
                                  autoDelete: false,
@@ -70,19 +67,16 @@ namespace Pres
 
                         channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false); //Important. When the message get's not acknowledged, it gets sent again
 
-						//Interface Aufruf der Remote Transaction.
-						TransactionWrapper.Intf_remoteTransfer(transaction.Sender.Iban, transaction.Sender.Bic, transaction.Receiver.Iban, transaction.Receiver.Bic, transaction.Amount, transaction.Currency);
-
-						Console.WriteLine("[x] Received:");
+                        Console.WriteLine("[x] Received:");
                         PrintTransaction(transaction);
                     };
 
-                    channel.BasicConsume(queue: "11",
+                    channel.BasicConsume(queue: "10",
                                          noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
                                          consumer: consumer);
 
-                    //Console.WriteLine(" Press [enter] to exit receive.");
-                    //Console.ReadLine();
+                    Console.WriteLine(" Press [enter] to exit receive.");
+                    Console.ReadLine();
                 }
             }
         }
