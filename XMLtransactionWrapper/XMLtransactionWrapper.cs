@@ -100,7 +100,7 @@ namespace Pres
                 }
                 else if (fromAccBic == toAccBic && value < 0)
                 {
-                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), (ourValue *-1), Helper.StoIPtr(purpose));
+                    returnCode = xmlcontroler_remoteTransaction(toAccId, fromAccId, Int32.Parse(toAccBic), Int32.Parse(fromAccBic), (ourValue *-1), Helper.StoIPtr(purpose));
                 }
 				
 				return returnCode ? 0 : -1;

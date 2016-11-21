@@ -74,7 +74,7 @@ namespace Pres
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(queue: "11",
+                    channel.QueueDeclare(queue: "10",
                                  durable: true, //Always use durable: true, because the queue on the server is configured this way. Otherwise you'll not be able to connect
                                  exclusive: false,
                                  autoDelete: false,
@@ -159,12 +159,14 @@ namespace Pres
                         {
                             Console.WriteLine("Error: " + e);
                         }
-
-                        Console.WriteLine("[x] Received:");
-                        PrintTransaction(transaction);
+                        //dont print acks
+                        if (!transaction.IsResponding)
+                        {
+                            Console.WriteLine("[x] Received:");
+                            PrintTransaction(transaction);
+                        }
                     };
-
-                    channel.BasicConsume(queue: "11",
+                    channel.BasicConsume(queue: "10",
                                      noAck: false,  //If noAck: false the command channel.BasicAck (see above) has to be implemented. Don't set it true, or the message will not get resubmitted, if the bank was offline
                                      consumer: consumer);
                     Thread.Sleep(1000);
