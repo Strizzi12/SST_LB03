@@ -52,14 +52,13 @@ namespace Pres
 		/// <summary>
 		/// Interface that withdraws the given value from the given account.
 		/// It also accepts values from another currencies.
-		/// To select a currency, please insert the integer from below.
 		/// </summary>
 		/// <param name="tmpAccID"></param>
 		/// <param name="tmpValue"></param>
 		/// <returns>Returns 0 if the withdraw is successfully.</returns>
 		public static int Intf_withdraw(int tmpAccID, float tmpValue)
 		{
-			return xmlcontroler_withdrawMoney(tmpAccID, tmpValue) ? 0 : -1;
+			return xmlcontroler_withdrawMoney(tmpAccID, tmpValue) ? 0 : -5;
 		}
 
 		/// <summary>
@@ -86,7 +85,24 @@ namespace Pres
 				float ourValue = float.Parse(value.ToString());
 
 				string purpose = "Sende BIC: " + fromAccBic + ", Empfang BIC: " + toAccBic;
-				bool returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+                bool returnCode = false;
+                if (fromAccBic != toAccBic && value < 0)
+                {
+                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), (ourValue * -1), Helper.StoIPtr(purpose));
+                }
+                else if (fromAccBic != toAccBic && value >= 0)
+                {
+                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+                }
+                else if (fromAccBic == toAccBic && value >= 0)
+                {
+                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+                }
+                else if (fromAccBic == toAccBic && value < 0)
+                {
+                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), (ourValue *-1), Helper.StoIPtr(purpose));
+                }
+				
 				return returnCode ? 0 : -1;
 			}
 			catch (Exception e)
