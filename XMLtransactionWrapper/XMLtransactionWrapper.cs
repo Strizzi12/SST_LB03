@@ -58,7 +58,7 @@ namespace Pres
 		/// <returns>Returns 0 if the withdraw is successfully.</returns>
 		public static int Intf_withdraw(int tmpAccID, float tmpValue)
 		{
-			return xmlcontroler_withdrawMoney(tmpAccID, tmpValue) ? 0 : -5;
+			return xmlcontroler_withdrawMoney(tmpAccID, tmpValue) ? 0 : -1;
 		}
 
 		/// <summary>
