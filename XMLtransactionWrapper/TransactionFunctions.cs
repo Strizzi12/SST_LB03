@@ -56,7 +56,7 @@ namespace Pres
                                     body: GetBytes(transactionString));
 
                 //Interface Aufruf der Remote Transaction.
-                TransactionWrapper.Intf_remoteTransfer(transaction.Sender.Iban, transaction.Sender.Bic, transaction.Receiver.Iban, transaction.Receiver.Bic, getToEuro(transaction), transaction.Currency);
+                TransactionWrapper.Intf_remoteTransfer(transaction.Sender.Iban, transaction.Sender.Bic, transaction.Receiver.Iban, transaction.Receiver.Bic, getToEuro(transaction), transaction.Currency, transaction.IsResponding);
 
                 Console.WriteLine("[x] Message Sent");
             }

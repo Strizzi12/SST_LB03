@@ -74,7 +74,7 @@ namespace Pres
 			return xmlcontroler_depositMoney(tmpAccID, tmpValue) ? 0 : -1;
 		}
 
-		internal static int Intf_remoteTransfer(string fromAccIban, string fromAccBic, string toAccIban, string toAccBic, double value, ECurrency currency)
+		internal static int Intf_remoteTransfer(string fromAccIban, string fromAccBic, string toAccIban, string toAccBic, double value, ECurrency currency, bool isRespondig)
 		{
 			try
 			{
@@ -86,23 +86,27 @@ namespace Pres
 
 				string purpose = "Sende BIC: " + fromAccBic + ", Empfang BIC: " + toAccBic;
                 bool returnCode = false;
-                if (fromAccBic != toAccBic && value < 0)
+
+                if (!isRespondig)
                 {
-                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), (ourValue * -1), Helper.StoIPtr(purpose));
+                    if (fromAccBic != toAccBic && value < 0)
+                    {
+                        returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), (ourValue * -1), Helper.StoIPtr(purpose));
+                    }
+                    else if (fromAccBic != toAccBic && value >= 0)
+                    {
+                        returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+                    }
+                    else if (fromAccBic == toAccBic && value >= 0)
+                    {
+                        returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+                    }
+                    else if (fromAccBic == toAccBic && value < 0)
+                    {
+                        returnCode = xmlcontroler_remoteTransaction(toAccId, fromAccId, Int32.Parse(toAccBic), Int32.Parse(fromAccBic), (ourValue * -1), Helper.StoIPtr(purpose));
+                    }
                 }
-                else if (fromAccBic != toAccBic && value >= 0)
-                {
-                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
-                }
-                else if (fromAccBic == toAccBic && value >= 0)
-                {
-                    returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
-                }
-                else if (fromAccBic == toAccBic && value < 0)
-                {
-                    returnCode = xmlcontroler_remoteTransaction(toAccId, fromAccId, Int32.Parse(toAccBic), Int32.Parse(fromAccBic), (ourValue *-1), Helper.StoIPtr(purpose));
-                }
-				
+
 				return returnCode ? 0 : -1;
 			}
 			catch (Exception e)
