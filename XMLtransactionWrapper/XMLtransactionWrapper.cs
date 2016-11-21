@@ -91,7 +91,7 @@ namespace Pres
                 {
                     if (fromAccBic != toAccBic && value < 0)
                     {
-                        returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), (ourValue * -1), Helper.StoIPtr(purpose));
+                        returnCode = xmlcontroler_depositMoney(Int32.Parse(fromAccBic), (ourValue * -1));
                     }
                     else if (fromAccBic != toAccBic && value >= 0)
                     {
