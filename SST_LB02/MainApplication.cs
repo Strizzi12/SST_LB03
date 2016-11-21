@@ -10,101 +10,99 @@ using System.ComponentModel;
 
 namespace SST_LB03
 {
-    class MainApplication
-    {
-		
+	class MainApplication
+	{
+
 		static void Main(string[] args)
-        {
-			//#region FUNCTION TEST CALL
+		{
+			#region FUNCTION TEST CALL
 			////clear existing data of directory
 			//DataMaintenance.Intf_clearData();
-   //         //--------------------------------------------------------------------------
-   //         int VEcusID, FScusID = 0;
-   //         // Customer functions
-   //         VEcusID = CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
+			//         //--------------------------------------------------------------------------
+			//         int VEcusID, FScusID = 0;
+			//         // Customer functions
+			//         VEcusID = CustomerWrapper.Intf_createCustomer("Mike", "Thomas", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
 
-   //         CustomerWrapper.Intf_updateCustomer(VEcusID, "Mike", "Anders", "5020", "AnotherPlace", "AnotherStreet", 1111, "11.11.1111");
+			//         CustomerWrapper.Intf_updateCustomer(VEcusID, "Mike", "Anders", "5020", "AnotherPlace", "AnotherStreet", 1111, "11.11.1111");
 
-   //         CustomerWrapper.Intf_deleteCustomer(VEcusID);
+			//         CustomerWrapper.Intf_deleteCustomer(VEcusID);
 
-   //         VEcusID = CustomerWrapper.Intf_createCustomer("Betty", "Katzian", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
+			//         VEcusID = CustomerWrapper.Intf_createCustomer("Betty", "Katzian", "5020", "Salzburg", "Breitenfelderstrasse", 47, "13.11.1992");
 			////--------------------------------------------------------------------------
 			//// Account functions
 			//int VEaccID, FSaccID = 0;
-   //         VEaccID = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			//         VEaccID = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 
-   //         //Account edit
-   //         try
-   //         {
-   //             //interface throws notimplex bc 2nd party dll does not include this functionality
-   //             AccountWrapper.Intf_editAccount(FSaccID, 1);
-   //         }
-   //         catch (Exception ex)
-   //         {
-   //             Debug.Print(ex.Message);
-   //         }
+			//         //Account edit
+			//         try
+			//         {
+			//             //interface throws notimplex bc 2nd party dll does not include this functionality
+			//             AccountWrapper.Intf_editAccount(FSaccID, 1);
+			//         }
+			//         catch (Exception ex)
+			//         {
+			//             Debug.Print(ex.Message);
+			//         }
 
-   //         //Account deletion
-   //         try
-   //         {
-   //             //interface throws notimplex bc 2nd party dll does not include this functionality
-   //             AccountWrapper.Intf_deleteAccount(FSaccID);
-   //         }
-   //         catch (Exception ex)
-   //         {
-   //             Debug.Print(ex.Message);
-   //         }
+			//         //Account deletion
+			//         try
+			//         {
+			//             //interface throws notimplex bc 2nd party dll does not include this functionality
+			//             AccountWrapper.Intf_deleteAccount(FSaccID);
+			//         }
+			//         catch (Exception ex)
+			//         {
+			//             Debug.Print(ex.Message);
+			//         }
 
-   //         ////create transactions for the accounts
-   //         int VEaccID2, FSaccID2, VEaccID3, FSaccID3 = 0;
-   //         VEaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
-   //         FSaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			//         ////create transactions for the accounts
+			//         int VEaccID2, FSaccID2, VEaccID3, FSaccID3 = 0;
+			//         VEaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
+			//         FSaccID2 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 			//VEaccID3 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 			//FSaccID3 = AccountWrapper.Intf_createAccount(0, 1000, "TestNameAcc");
 
 			////Attach/Dettach customer to account
 			//AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
 
-   //         AccountWrapper.Intf_dettachAccount(FSaccID2, FScusID);
+			//         AccountWrapper.Intf_dettachAccount(FSaccID2, FScusID);
 
-   //         AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
+			//         AccountWrapper.Intf_attachAccount(FSaccID2, FScusID);
 
-   //         //Creating transactions
-   //         TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
+			//         //Creating transactions
+			//         TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
 
 			//TransactionWrapper.Intf_deposit(FSaccID2, 500);
 
 			//TransactionWrapper.Intf_withdraw(FSaccID2, 500);
 
-   //         //create a bankstatement
-   //         AccountWrapper.Intf_createBankStatement(FSaccID2);
+			//         //create a bankstatement
+			//         AccountWrapper.Intf_createBankStatement(FSaccID2);
 
 			//TransactionWrapper.Intf_transfer(FScusID, FSaccID2, FSaccID3, 100, 0);
 
-   //         //create a bankstatement
-   //         AccountWrapper.Intf_createBankStatement(FSaccID2);
-			//#endregion
+			//         //create a bankstatement
+			//         AccountWrapper.Intf_createBankStatement(FSaccID2);
+			#endregion
 
 			DataMaintenance.Intf_clearData();
 			Console.Clear();
-            AccountWrapper.Intf_createAccount(0, 1000.00, "FirstAccount");
-            AccountWrapper.Intf_createAccount(0, 1000.00, "SecondAccount");
-            AccountWrapper.Intf_createAccount(0, 1000.00, "ThirdAccount");
-            bool running = true;
+			AccountWrapper.Intf_createAccount(0, 10000.00, "FirstAccount");
+			AccountWrapper.Intf_createAccount(0, 10000.00, "SecondAccount");
+			AccountWrapper.Intf_createAccount(0, 10000.00, "ThirdAccount");
+			bool running = true;
 			Console.WriteLine("Willkommen zum einfachen BankClient.\nIm Folgenden werden die eingebauten Kommandos  und mit welcher Zahl sie aufgerufen werden können erklärt.");
 			hilfe();
-
-
-            while (running)
+			while (running)
 			{
-                Thread thread = new Thread(TransactionFunctions.Receive);
-                thread.Start();
-                //TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
-                Console.WriteLine("Bitte Zahl eingeben: ");
-                running = eingabeAusfuehren(Console.ReadLine());
+				Thread thread = new Thread(TransactionFunctions.Receive);
+				thread.Start();
+				//TransactionFunctions.Receive(); //Needs to be called atleast once, so that the consumer can listen to incoming Transactions
+				Console.WriteLine("Bitte Zahl eingeben: ");
+				running = eingabeAusfuehren(Console.ReadLine());
 
-            }
-        }
+			}
+		}
 
 		static void hilfe()
 		{
@@ -117,7 +115,7 @@ namespace SST_LB03
 			Console.WriteLine("Konto löschen: 6");
 			Console.WriteLine("Kontoauszug erstellen: 7");
 			Console.WriteLine("Neue Überweisung: 8");
-			Console.WriteLine("Neue Remote - Überweisung: 9");
+			Console.WriteLine("Neue Remote - Überweisung/Abhebung: 9");
 			Console.WriteLine("Einzahlen: 10");
 			Console.WriteLine("Abheben: 11");
 			Console.WriteLine("Wartungsaufgaben (bedeutet, löschen aller Daten, für Simulationszwecke): 12");
@@ -131,20 +129,20 @@ namespace SST_LB03
 			int id = 0;
 			switch (s)
 			{
-				case "0":	//Hilfe ausgeben
+				case "0":   //Hilfe ausgeben
 					hilfe();
 					return true;
 
-				case "1":	//Neuen Kunden erstellen
+				case "1":   //Neuen Kunden erstellen
 					try
 					{
 						Console.WriteLine("Um einen neuen Kunden anzulegen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
 						Console.WriteLine("Vorname, Nachname, Ort, PLZ, Strasse, Hausnummer, Geburtstag\nEingabe: ");
 						a = Console.ReadLine();
 						//Bei string.split wird auch immer das Trennzeichen in das array kopiert.
-						id = CustomerWrapper.Intf_createCustomer(a.Split(',', ' ')[0],	//Vorname
-							a.Split(',', ' ')[2],										//Nachname
-							a.Split(',', ' ')[4],										//Ort
+						id = CustomerWrapper.Intf_createCustomer(a.Split(',', ' ')[0],  //Vorname
+							a.Split(',', ' ')[2],                                       //Nachname
+							a.Split(',', ' ')[4],                                       //Ort
 							a.Split(',', ' ')[6],                                       //PLZ
 							a.Split(',', ' ')[8],                                       //Strasse
 							Int32.Parse(a.Split(',', ' ')[10]),                         //Hausnummer
@@ -161,7 +159,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "2":	//Kunden bearbeiten
+				case "2":   //Kunden bearbeiten
 					try
 					{
 						Console.WriteLine("Um einen Kunden zu bearbeiten, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
@@ -169,13 +167,13 @@ namespace SST_LB03
 						a = Console.ReadLine();
 						//Bei string.split wird auch immer das Trennzeichen in das array kopiert.
 						id = CustomerWrapper.Intf_updateCustomer(Int32.Parse(a.Split(',', ' ')[0]), //Kundennummer
-							a.Split(',', ' ')[2],													//Vorname
-							a.Split(',', ' ')[4],													//Nachname
-							a.Split(',', ' ')[6],													//Ort
-							a.Split(',', ' ')[8],													//PLZ
-							a.Split(',', ' ')[10],													//Strasse
-							Int32.Parse(a.Split(',', ' ')[12]),										//Hausnummer
-							a.Split(',', ' ')[14]);													//Geburtsdatum
+							a.Split(',', ' ')[2],                                                   //Vorname
+							a.Split(',', ' ')[4],                                                   //Nachname
+							a.Split(',', ' ')[6],                                                   //Ort
+							a.Split(',', ' ')[8],                                                   //PLZ
+							a.Split(',', ' ')[10],                                                  //Strasse
+							Int32.Parse(a.Split(',', ' ')[12]),                                     //Hausnummer
+							a.Split(',', ' ')[14]);                                                 //Geburtsdatum
 
 						if (id >= 0)
 							Console.WriteLine("Erfolgreich geändert.");
@@ -188,7 +186,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "3":	//Kunden löschen
+				case "3":   //Kunden löschen
 					try
 					{
 						Console.WriteLine("Um einen Kunden zu löschen, bitte die Kundennummer eingeben: ");
@@ -205,7 +203,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "4":	//Konto erstellen
+				case "4":   //Konto erstellen
 					try
 					{
 						Console.WriteLine("Um ein neues Konto zu erstellen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
@@ -213,7 +211,7 @@ namespace SST_LB03
 						a = Console.ReadLine();
 						id = AccountWrapper.Intf_createAccount(Int32.Parse(a.Split(',', ' ')[0]), Double.Parse(a.Split(',', ' ')[2]), a.Split(',', ' ')[4]);
 						if (id >= 0)
-							Console.WriteLine("Erfolgreich erstellt. Kontonummer = " + id +", bitte merken.");
+							Console.WriteLine("Erfolgreich erstellt. Kontonummer = " + id + ", bitte merken.");
 						else
 							Console.WriteLine("Falsche Eingaben, bitte wiederholen.");
 					}
@@ -223,7 +221,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "5":	//Konto bearbeiten
+				case "5":   //Konto bearbeiten
 					try
 					{
 						Console.WriteLine("Um ein Konto zu bearbeiten, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
@@ -241,7 +239,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "6":	//Konto löschen
+				case "6":   //Konto löschen
 					try
 					{
 						Console.WriteLine("Um ein Konto zu löschen, bitte die Kontonummer eingeben: ");
@@ -258,7 +256,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "7":	//Kontoauszug erstellen
+				case "7":   //Kontoauszug erstellen
 					try
 					{
 						Console.WriteLine("Um einen Kontoauszug zu erstellen, bitte die Kontonummer eingeben: ");
@@ -275,7 +273,7 @@ namespace SST_LB03
 					}
 					return true;
 
-				case "8":	//Neue Ueberweisung
+				case "8":   //Neue Ueberweisung
 					try
 					{
 						//Die Überweisung braucht auch einen zum Konto zugewiesenen Kunden.
@@ -299,7 +297,8 @@ namespace SST_LB03
 					try
 					{
 						//Die Überweisung braucht auch einen zum Konto zugewiesenen Kunden.
-						Console.WriteLine("Um eine neue Ueberweisung durchzuführen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
+						Console.WriteLine("Um eine neue Remote - Ueberweisung durchzuführen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
+						Console.WriteLine("Um Geld abzuheben, bitte bei Sender und Empfänger den selben IBAN und BIC eingeben.");
 						Console.WriteLine("Von Kontonummer, von BIC, zu Kontonummer, zu BIC, Betrag, in Waehrung(EUR = 0, USD = 1, GBP = 2)\nEingabe: ");
 						a = Console.ReadLine();
 
@@ -311,18 +310,18 @@ namespace SST_LB03
 						ECurrency currency = ECurrency.Euro;
 						if (a.Split(',', ' ')[10].Equals("1"))
 							currency = ECurrency.Dollar;
-						else if(a.Split(',', ' ')[10].Equals("2"))
+						else if (a.Split(',', ' ')[10].Equals("2"))
 							currency = ECurrency.Pound;
 						RemoteTransaction transaction = new RemoteTransaction(RemoteTransaction.GenerateIbanFromAccID(fromIban), fromBic, RemoteTransaction.GenerateIbanFromAccID(toIban), toBic, value, currency);
 						TransactionFunctions.Send(transaction);
-                    }
+					}
 					catch (Exception e)
 					{
 						Console.WriteLine("Error: " + e.Message);
 					}
 					return true;
 
-				case "10":	//Einzahlen
+				case "10":  //Einzahlen
 					try
 					{
 						Console.WriteLine("Um etwas auf einem Konto einzuzahlen, bitte folgende Daten mit Beistrich und Leerzeichen (, ) getrennt eingeben.");
@@ -381,5 +380,5 @@ namespace SST_LB03
 					return true;
 			}
 		}
-    }
+	}
 }

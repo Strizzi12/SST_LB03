@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pres
 {
-    public class TransactionWrapper
+	public class TransactionWrapper
 	{
 		#region ### WRAPPER ###
 		[DllImport("XMLControler.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -43,7 +43,7 @@ namespace Pres
 		public static int Intf_transfer(int custId, int tmpFromAccID, int tmpToAccID, float tmpValue, int currency)
 		{
 			//Note that this DLL doesn´t need a customerID to create a transaction.
-			if(currency == 0)
+			if (currency == 0)
 				return xmlcontroler_transferMoney(tmpFromAccID, tmpToAccID, tmpValue) ? 0 : -1;
 			else
 				return xmlcontroler_transferMoney(tmpFromAccID, tmpToAccID, Convert.ToSingle(CurrencyExchangeWrapper.Intf_exchange(tmpValue, currency, 0))) ? 0 : -1;
@@ -75,7 +75,7 @@ namespace Pres
 			return xmlcontroler_depositMoney(tmpAccID, tmpValue) ? 0 : -1;
 		}
 
-		internal static void Intf_remoteTransfer(string fromAccIban, string fromAccBic, string toAccIban, string toAccBic, double value, ECurrency currency)
+		internal static int Intf_remoteTransfer(string fromAccIban, string fromAccBic, string toAccIban, string toAccBic, double value, ECurrency currency)
 		{
 			try
 			{
@@ -84,15 +84,16 @@ namespace Pres
 				int toAccId = Int32.Parse(getAccIdFromIban(toAccIban));
 				int toAccIdBic = Int32.Parse(toAccBic);
 				float ourValue = float.Parse(value.ToString());
-				
+
 				string purpose = "Sende BIC: " + fromAccBic + ", Empfang BIC: " + toAccBic;
-				xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+				bool returnCode = xmlcontroler_remoteTransaction(fromAccId, toAccId, Int32.Parse(fromAccBic), Int32.Parse(toAccBic), ourValue, Helper.StoIPtr(purpose));
+				return returnCode ? 0 : -1;
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine("Error: " + e.Message);
+				return -1;
 			}
-			
 		}
 		#endregion
 
@@ -103,14 +104,14 @@ namespace Pres
 		/// </summary>
 		/// <param name="iban"></param>
 		/// <returns></returns>
-		private static string getAccIdFromIban(string iban)
+		public static string getAccIdFromIban(string iban)
 		{
 			string accId = string.Empty;
 			if (!RemoteTransaction.CheckPruefziffer(iban))
 				return accId;
 
 			string pruefziffer = iban[0].ToString();
-			string rest = iban.Substring(1, iban.Length-1);
+			string rest = iban.Substring(1, iban.Length - 1);
 			accId = rest.TrimStart('0');
 			return accId;
 		}
